@@ -2,12 +2,13 @@ const allLoadData = async (id) => {
     const res = await fetch("https://openapi.programming-hero.com/api/videos/categories")
     const data = await res.json();
     const buttons = data.data;
-    // console.log(buttons);
-    // console.log(buttons)
-    displayButton(buttons)
+    displayButton(buttons);
 
-
+    if (buttons.length > 0) {
+        loadCards(buttons[0].category_id);
+    }
 }
+
 
 const displayButton = (buttons) => {
 
@@ -31,7 +32,7 @@ const loadCards = async (id) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`);
     const data = await res.json();
     const cards = data.data;
-    // console.log(cards)
+  
     displayCards(cards);
 }
 
@@ -53,7 +54,7 @@ const displayCards = (cards) => {
         drawingContainer.appendChild(drawing)
     }
     
-    const cardsContainer = document.getElementById('card-create');
+    const cardsContainer = document.getElementById('create-card');
     cardsContainer.textContent = ''
     
     cards.forEach(element => {
@@ -68,12 +69,10 @@ const displayCards = (cards) => {
        
         const newCards = document.createElement('div');
 
-       
-
         newCards.innerHTML = `
         <div class="card bg-base-100 shadow-xl">
                     <figure><img class="w-80 h-40" src="${element.thumbnail}" /></figure>
-                    <button class="absolute w-38 bottom-28 left-20 bg-black text-white">${totalTime}</button>
+                    <button class="absolute bottom-28 left-32 bg-black text-white">${totalTime}</button>
                     <div class="flex gap-3">
                         <div class="chat-image avatar mb-12">
                             <div class="w-10 mt-4 rounded-full">
